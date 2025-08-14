@@ -21,7 +21,7 @@ export default function Header() {
       <div className="header-inner">
         <div className="row" style={{ gap:12 }}>
           <button onClick={() => dispatch(toggleSidebar())} title="Menu">☰</button>
-          <Link to="/" style={{ fontWeight:700 }}>MiniTube</Link>
+          <Link to="/" style={{ fontWeight:700 }}>YouTube</Link>
         </div>
         <form onSubmit={onSearch} className="row" style={{ flex:1, maxWidth:720 }}>
           <input
