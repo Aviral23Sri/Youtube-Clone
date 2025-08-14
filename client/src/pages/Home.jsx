@@ -1,48 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listVideos } from "../features/videos/videoSlice";
 import { Link } from "react-router-dom";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { items, status, page, pages } = useSelector(s => s.videos);
-  const [q, setQ] = useState("");
-  const [category, setCategory] = useState("");
+  const { items, status } = useSelector(s => s.videos);
 
   useEffect(() => {
-    dispatch(listVideos({ q, category, page: 1, limit: 12 }));
-  }, [q, category, dispatch]);
+    if (!items.length) dispatch(listVideos({ page:1, limit:24 }));
+  }, [dispatch]);
 
   return (
-    <div>
-      <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-        <input placeholder="Search..." value={q} onChange={(e) => setQ(e.target.value)} />
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="">All</option>
-          <option>Programming</option>
-          <option>Music</option>
-          <option>Gaming</option>
-        </select>
-      </div>
+    <div className="grid video-grid">
       {status === "loading" && <p>Loading...</p>}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
-        {items.map(v => (
-          <Link key={v._id} to={`/watch/${v._id}`} style={{ border: "1px solid #eee", padding: 8, textDecoration: "none", color: "inherit" }}>
-            <div style={{ background: "#ddd", height: 140, display: "grid", placeItems: "center" }}>
-              {/* Thumbnail image stream endpoint */}
-              <img
-                alt="thumb"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                src={`${import.meta.env.VITE_API_URL}/videos/stream/${v.thumbFileId}`}
-                onError={(e) => (e.currentTarget.style.display = "none")}
-              />
+      {items.map(v => (
+        <Link key={v._id} to={`/watch/${v._id}`} className="card">
+          <img className="thumb" src={`${import.meta.env.VITE_API_URL}/videos/stream/${v.thumbFileId}`} alt={v.title} />
+          <div className="row" style={{ marginTop: 8, alignItems:"start" }}>
+            <div style={{ width: 36, height: 36, borderRadius: "50%", background:"#444" }} />
+            <div style={{ flex:1 }}>
+              <div style={{ fontWeight:600, lineHeight:1.3 }}>{v.title}</div>
+              <div style={{ color:"var(--muted)", fontSize:14 }}>{v?.uploader?.username ?? "Channel"}</div>
+              <div style={{ color:"var(--muted)", fontSize:13 }}>{v.views} views • {new Date(v.createdAt).toLocaleDateString()}</div>
             </div>
-            <h4>{v.title}</h4>
-            <p style={{ margin: 0, color: "#666" }}>{v?.uploader?.username ?? "Unknown"}</p>
-            <p style={{ margin: 0, color: "#666" }}>{v.views} views</p>
-          </Link>
-        ))}
-      </div>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 }
