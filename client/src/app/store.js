@@ -3,12 +3,14 @@ import authReducer from "../features/auth/authSlice";
 import videoReducer from "../features/videos/videoSlice";
 import commentReducer from "../features/comments/commentSlice";
 import uiReducer from "../features/ui/uiSlice";
+import channelReducer from "../features/channels/channelSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     videos: videoReducer,
     comments: commentReducer,
-    ui: uiReducer
+    ui: uiReducer,
+    channel: channelReducer
   }
 });
