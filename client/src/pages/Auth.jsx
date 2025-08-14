@@ -20,9 +20,9 @@ export default function Auth() {
   };
 
   return (
-    <div style={{ display:"grid", placeItems:"center", minHeight:"60vh" }}>
-      <form onSubmit={submit} style={{ width: 380, background:"var(--card)", padding: 24, borderRadius: 12, border:"1px solid var(--line)" }}>
-        <h2 style={{ marginTop:0, marginBottom:12 }}>{mode==="login"?"Sign in":"Create account"}</h2>
+    <div style={{ display:"grid", placeItems:"center", minHeight:"70vh" }}>
+      <form onSubmit={submit} style={{ width: 420, background:"var(--card)", padding: 24, borderRadius: 12, border:"1px solid var(--line)" }}>
+        <h2 style={{ marginTop:0, marginBottom:16 }}>{mode==="login"?"Sign in":"Create account"}</h2>
         {mode==="register" && (
           <div style={{ marginBottom:12 }}>
             <label>Username</label>

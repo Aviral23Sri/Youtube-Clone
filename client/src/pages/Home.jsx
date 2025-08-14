@@ -8,7 +8,7 @@ export default function Home() {
   const { items, status } = useSelector(s => s.videos);
 
   useEffect(() => {
-    if (!items.length) dispatch(listVideos({ page:1, limit:24 }));
+    dispatch(listVideos({ page:1, limit:24 }));
   }, [dispatch]);
 
   return (
@@ -17,12 +17,12 @@ export default function Home() {
       {items.map(v => (
         <Link key={v._id} to={`/watch/${v._id}`} className="card">
           <img className="thumb" src={`${import.meta.env.VITE_API_URL}/videos/stream/${v.thumbFileId}`} alt={v.title} />
-          <div className="row" style={{ marginTop: 8, alignItems:"start" }}>
-            <div style={{ width: 36, height: 36, borderRadius: "50%", background:"#444" }} />
+          <div className="meta-row">
+            <div className="avatar" />
             <div style={{ flex:1 }}>
-              <div style={{ fontWeight:600, lineHeight:1.3 }}>{v.title}</div>
-              <div style={{ color:"var(--muted)", fontSize:14 }}>{v?.uploader?.username ?? "Channel"}</div>
-              <div style={{ color:"var(--muted)", fontSize:13 }}>{v.views} views • {new Date(v.createdAt).toLocaleDateString()}</div>
+              <div className="title">{v.title}</div>
+              <div className="subtle">{v?.uploader?.username ?? "Channel"}</div>
+              <div className="subtle">{v.views} views</div>
             </div>
           </div>
         </Link>
