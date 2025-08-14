@@ -9,6 +9,6 @@ export const store = configureStore({
     auth: authReducer,
     videos: videoReducer,
     comments: commentReducer,
-    ui: uiReducer 
+    ui: uiReducer
   }
 });
